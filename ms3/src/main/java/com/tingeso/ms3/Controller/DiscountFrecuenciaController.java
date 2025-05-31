@@ -1,0 +1,21 @@
+package com.tingeso.ms3.Controller;
+
+import com.tingeso.ms3.Entity.DiscountFrecuenciaEntity;
+import com.tingeso.ms3.Repository.DiscountFrecuenciaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/frecuencia")
+public class DiscountFrecuenciaController {
+
+    @Autowired
+    private DiscountFrecuenciaRepository repository;
+
+    @GetMapping
+    public List<DiscountFrecuenciaEntity> getAll() {
+        return repository.findAll();
+    }
+}
