@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tarifas")
+@RequestMapping("/api/tarifas")
 @CrossOrigin(origins = "*")
 public class TariffController {
 

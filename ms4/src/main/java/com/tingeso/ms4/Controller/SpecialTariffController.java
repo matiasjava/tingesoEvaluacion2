@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/special-tariffs")
+@RequestMapping("/api/fecha-descuento")
 public class SpecialTariffController {
 
     @Autowired
@@ -30,23 +30,26 @@ public class SpecialTariffController {
         return repository.save(entity);
     }
 
-    @PostMapping
+    @PostMapping("/calcular")
     public ResponseEntity<FechaDescuentoDTO> calcularDescuento(@RequestBody FechaDescuentoRequest request) {
         LocalDate fecha = request.getFecha();
         int cantidad = request.getCantidad();
-        List<LocalDate> fechasCumpleaños = request.getFechasCumpleaños();
+        List<LocalDate> fechasCumpleanos = request.getFechasCumpleanos();
 
         double descuentoCumple = 0;
-        int cumpleCount = (int) fechasCumpleaños.stream().filter(f -> f.equals(fecha)).count();
+        int cumpleCount = (int) fechasCumpleanos.stream().filter(f -> f.equals(fecha)).count();
 
         if (cantidad >= 3 && cantidad <= 5 && cumpleCount >= 1) {
             descuentoCumple = 50;
         } else if (cantidad >= 6 && cantidad <= 10 && cumpleCount >= 2) {
-            descuentoCumple = 100; // 2 personas al 50%
+            descuentoCumple = 100;
         }
 
-        boolean esFinde = fecha.getDayOfWeek().getValue() >= 6;
-        boolean esFeriado = List.of(LocalDate.of(2025, 9, 18), LocalDate.of(2025, 12, 25)).contains(fecha);
+        boolean esFinde = fecha.getDayOfWeek().getValue() >= 6; // Sábado o domingo
+        boolean esFeriado = List.of(
+                LocalDate.of(2025, 9, 18),
+                LocalDate.of(2025, 12, 25)
+        ).contains(fecha);
 
         FechaDescuentoDTO dto = new FechaDescuentoDTO();
         dto.setDescuentoCumple(descuentoCumple);

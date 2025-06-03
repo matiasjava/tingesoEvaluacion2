@@ -1,12 +1,12 @@
 package com.tingeso.ms5.DTOs;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class TariffDTO {
     private Long id;
     private String tipo;

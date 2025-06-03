@@ -9,5 +9,5 @@ import java.util.List;
 public class FechaDescuentoRequest {
     private LocalDate fecha;
     private int cantidad;
-    private List<LocalDate> fechasCumpleaños;
+    private List<LocalDate> fechasCumpleanos;
 }

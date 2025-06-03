@@ -63,10 +63,15 @@ public class ReserveService {
         return reserveRepository.save(reserve);
     }
 
-    public TariffDTO obtenerTarifa(int duracionMinutos) {
+    public int obtenerTarifa(int duracionMinutos) {
         String url = "http://ms1/api/tarifas/duracion/" + duracionMinutos;
-        return restTemplate.getForObject(url, TariffDTO.class);
+        TariffDTO tarifa = restTemplate.getForObject(url, TariffDTO.class);
+        if (tarifa == null) {
+            throw new RuntimeException("No se encontró una tarifa para la duración: " + duracionMinutos);
+        }
+        return tarifa.getPrecio();
     }
+
 
 
 
