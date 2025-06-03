@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiscountCantidadRepository extends JpaRepository<DiscountCantidadEntity, Long> {
+    DiscountCantidadEntity findByMinPersonasLessThanEqualAndMaxPersonasGreaterThanEqual(int cantidad1, int cantidad2);
+
 }

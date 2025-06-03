@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TariffRepository extends JpaRepository<TariffEntity, Long> {
+    TariffEntity findByDuracionMinutos(int duracionMinutos);
 }
+
 
 
