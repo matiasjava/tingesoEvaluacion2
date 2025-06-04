@@ -16,5 +16,5 @@ public class DiscountFrecuenciaEntity {
     private String categoria;
     private int minVisitas;
     private int maxVisitas;
-    private int descuento;
+    private double descuento;
 }

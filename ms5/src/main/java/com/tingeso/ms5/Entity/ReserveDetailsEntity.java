@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ReserveDetailsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

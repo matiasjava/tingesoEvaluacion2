@@ -12,6 +12,8 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ReserveEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class ReserveEntity {
     private String horaFin;
     private Long clienteId;
     private int cantidadPersonas;
-    private String vueltasOTiempo;
+    private int vueltasOTiempo;
     private double montoFinal;
 
     @OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL, orphanRemoval = true)

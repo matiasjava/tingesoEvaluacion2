@@ -3,10 +3,13 @@ package com.tingeso.ms2.Controller;
 import com.tingeso.ms2.Entity.DiscountCantidadEntity;
 import com.tingeso.ms2.Repository.DiscountCantidadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/descuentoscantidad")
@@ -21,13 +24,14 @@ public class DiscountCantidadController {
     }
 
     @GetMapping("/{cantidad}")
-    public ResponseEntity<DiscountCantidadEntity> obtenerDescuento(@PathVariable int cantidad) {
-        DiscountCantidadEntity descuento = repository.findByMinPersonasLessThanEqualAndMaxPersonasGreaterThanEqual(cantidad, cantidad);
-        if (descuento != null) {
-            return ResponseEntity.ok(descuento);
+    @ResponseBody
+    public double obtenerDescuento(@PathVariable int cantidad) {
+        DiscountCantidadEntity descuentoEntity = repository.findByMinPersonasLessThanEqualAndMaxPersonasGreaterThanEqual(cantidad, cantidad);
+
+        if (descuentoEntity != null) {
+            return descuentoEntity.getDescuento() / 100.0;
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Descuento no encontrado");
         }
     }
-
 }

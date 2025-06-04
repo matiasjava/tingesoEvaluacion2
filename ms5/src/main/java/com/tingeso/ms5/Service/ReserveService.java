@@ -36,40 +36,104 @@ public class ReserveService {
 
         List<ReserveDetailsEntity> detalles = new ArrayList<>();
         double montoFinalTotal = 0;
+        int cumpleanosAplicados = 0;
+        int maxCumpleanos = calcularMaxCumpleanos(dto.getMiembros().size());
 
         for (MemberDTO miembro : dto.getMiembros()) {
             ReserveDetailsEntity detalle = new ReserveDetailsEntity();
             detalle.setMemberName(miembro.getNombre());
             detalle.setDateBirthday(miembro.getFechaNacimiento());
             detalle.setUserId(miembro.getUserId());
-
-            double montoBase = 0;
-            double descuentoCantidad = 0;
-            double descuentoFrecuencia = 0;
-            double descuentoCumple = 0;
-
-            double montoConDescuento = montoBase * (1 - descuentoCantidad - descuentoFrecuencia - descuentoCumple);
-            detalle.setMontoFinal(montoConDescuento);
-            detalle.setDiscount(descuentoCantidad + descuentoFrecuencia + descuentoCumple);
             detalle.setReserve(reserve);
+
+
+            double montoBase = obtenerTarifa(dto.getVueltasOTiempo());
+
+
+            double descuentoCantidad = obtenerDescuentoPorCantidad(dto.getMiembros().size());
+
+
+            double descuentoFrecuencia = obtenerDescuentoPorCategoria(miembro.getUserId());
+
+
+            double descuentoCumple = 0;
+            if (cumpleanosAplicados < maxCumpleanos &&
+                    miembro.getFechaNacimiento().equals(dto.getFechaUso())) {
+                descuentoCumple = 0.50;
+                cumpleanosAplicados++;
+            }
+
+
+            double descuentoFinal = Math.max(descuentoCumple,
+                    Math.max(descuentoFrecuencia, descuentoCantidad));
+
+
+            double montoConDescuento = montoBase * (1 - descuentoFinal);
+
+            detalle.setDiscount(descuentoFinal);
+            detalle.setMontoFinal(montoConDescuento);
 
             detalles.add(detalle);
             montoFinalTotal += montoConDescuento;
+
+            System.out.println("Monto base: " + montoBase);
+            System.out.println("Descuento cantidad: " + descuentoCantidad);
+            System.out.println("Descuento frecuencia: " + descuentoFrecuencia);
+            System.out.println("Descuento cumple: " + descuentoCumple);
+            System.out.println("Descuento final aplicado: " + descuentoFinal);
+            System.out.println("Monto final con descuento: " + montoConDescuento);
         }
+
+
 
         reserve.setMontoFinal(montoFinalTotal);
         reserve.setDetalles(detalles);
 
+
+
         return reserveRepository.save(reserve);
     }
 
+
     public int obtenerTarifa(int duracionMinutos) {
-        String url = "http://ms1/api/tarifas/duracion/" + duracionMinutos;
+        String url = "http://localhost:8001/api/tarifas/duracion/" + duracionMinutos;
         TariffDTO tarifa = restTemplate.getForObject(url, TariffDTO.class);
         if (tarifa == null) {
             throw new RuntimeException("No se encontró una tarifa para la duración: " + duracionMinutos);
         }
         return tarifa.getPrecio();
+    }
+
+    public double obtenerDescuentoPorCantidad(int cantidadPersonas) {
+        String url = "http://localhost:8002/api/descuentoscantidad/" + cantidadPersonas;
+        DescuentoCantidadResponse response = restTemplate.getForObject(url, DescuentoCantidadResponse.class);
+        Double descuento = response.getDescuento();
+
+        return descuento;
+
+    }
+
+
+    public double obtenerDescuentoPorCategoria(Long userId) {
+        String url = "http://localhost:8003/api/frecuencia/" + userId;
+        DiscountFrecuenciaEntity response = restTemplate.getForObject(url, DiscountFrecuenciaEntity.class);
+
+        if (response == null || response.getDescuento() == null) {
+            throw new RuntimeException("No se pudo obtener el descuento para el usuario con ID: " + userId);
+        }
+
+        return response.getDescuento();
+    }
+
+
+    public int calcularMaxCumpleanos(int cantidadPersonas) {
+        if (cantidadPersonas >= 6 && cantidadPersonas <= 10) {
+            return 2;
+        } else if (cantidadPersonas >= 3 && cantidadPersonas <= 5) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 
