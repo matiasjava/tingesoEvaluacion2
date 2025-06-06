@@ -49,4 +49,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @GetMapping("/{id}")
+    public UserEntity getUserById(@PathVariable("id") long id) {
+        return userService.findUserById(id);
+    }
 }
