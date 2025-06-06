@@ -12,5 +12,6 @@ import java.time.LocalDate;
 public class MemberDTO {
     private String nombre;
     private LocalDate fechaNacimiento;
+    private String rut;
     private Long userId;
 }

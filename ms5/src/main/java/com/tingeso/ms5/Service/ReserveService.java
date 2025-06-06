@@ -19,10 +19,15 @@ public class ReserveService {
     private ReserveRepository reserveRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ReserveDetailsRepository detailsRepository;
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private UserService userService;
 
 
     public ReserveEntity processReservation(ReserveRequestDTO dto) {
@@ -30,7 +35,9 @@ public class ReserveService {
         reserve.setFechaUso(dto.getFechaUso());
         reserve.setHoraInicio(dto.getHoraInicio());
         reserve.setHoraFin(dto.getHoraFin());
-        reserve.setClienteId(dto.getClienteId());
+        UserEntity user = userRepository.findById(dto.getClienteId()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        // System.out.println(user.getRut());
+        reserve.setCliente(user);
         reserve.setVueltasOTiempo(dto.getVueltasOTiempo());
         reserve.setCantidadPersonas(dto.getMiembros().size());
 
@@ -53,7 +60,7 @@ public class ReserveService {
             double descuentoCantidad = obtenerDescuentoPorCantidad(dto.getMiembros().size());
 
 
-            double descuentoFrecuencia = obtenerDescuentoPorCategoria(miembro.getUserId());
+            double descuentoFrecuencia = obtenerDescuentoPorCategoria(miembro.getRut());
 
 
             double descuentoCumple = 0;
@@ -114,12 +121,14 @@ public class ReserveService {
     }
 
 
-    public double obtenerDescuentoPorCategoria(Long userId) {
-        String url = "http://localhost:8003/api/frecuencia/" + userId;
+    public double obtenerDescuentoPorCategoria(String rut) {
+        System.out.println(rut);
+        int visitas = userService.getUserByRut(rut).getNumberVisits();
+        String url = "http://localhost:8003/api/frecuencia/" + visitas;
         DiscountFrecuenciaEntity response = restTemplate.getForObject(url, DiscountFrecuenciaEntity.class);
 
         if (response == null || response.getDescuento() == null) {
-            throw new RuntimeException("No se pudo obtener el descuento para el usuario con ID: " + userId);
+            throw new RuntimeException("No se pudo obtener el descuento para el usuario con ID: " + userService.getUserByRut(rut).getId());
         }
 
         return response.getDescuento();

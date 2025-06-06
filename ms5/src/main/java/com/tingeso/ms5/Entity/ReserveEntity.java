@@ -25,7 +25,11 @@ public class ReserveEntity {
     private LocalDate fechaUso;
     private String horaInicio;
     private String horaFin;
-    private Long clienteId;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private UserEntity cliente;
+
     private int cantidadPersonas;
     private int vueltasOTiempo;
     private double montoFinal;

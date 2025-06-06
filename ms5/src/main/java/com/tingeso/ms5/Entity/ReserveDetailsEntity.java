@@ -20,6 +20,8 @@ public class ReserveDetailsEntity {
     private LocalDate dateBirthday;
     private double montoFinal;
     private double discount;
+
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @ManyToOne

@@ -19,6 +19,8 @@ public class DiscountFrecuenciaController {
     public List<DiscountFrecuenciaEntity> getAll() {
         return repository.findAll();
     }
+
+
     @GetMapping("/{visitas}")
     public ResponseEntity<DiscountFrecuenciaEntity> obtenerDescuento(@PathVariable int visitas) {
         DiscountFrecuenciaEntity descuento = repository.findByMinVisitasLessThanEqualAndMaxVisitasGreaterThanEqual(visitas, visitas);

@@ -2,9 +2,7 @@ package com.tingeso.ms5.Controller;
 
 import com.tingeso.ms5.DTOs.MemberDTO;
 import com.tingeso.ms5.DTOs.ReserveRequestDTO;
-import com.tingeso.ms5.Entity.ReserveDetailsEntity;
 import com.tingeso.ms5.Entity.ReserveEntity;
-import com.tingeso.ms5.Mapper.ReserveMapper;
 import com.tingeso.ms5.Service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
