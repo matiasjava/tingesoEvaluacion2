@@ -56,6 +56,10 @@ public class ReserveService {
     @Autowired
     private JavaMailSender mailSender;
 
+    public List<ReserveEntity> getAllReserves() {
+        return reserveRepository.findAll();
+    }
+
     public ReserveEntity processReservation(ReserveRequestDTO dto) {
         ReserveEntity reserve = new ReserveEntity();
         reserve.setFechaUso(dto.getFechaUso());

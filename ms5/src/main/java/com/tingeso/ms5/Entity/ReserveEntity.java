@@ -31,7 +31,7 @@ public class ReserveEntity {
     private UserEntity cliente;
 
     private int cantidadPersonas;
-    private int vueltasOTiempo;
+    private double vueltasOTiempo;
     private double montoFinal;
 
     @OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL, orphanRemoval = true)

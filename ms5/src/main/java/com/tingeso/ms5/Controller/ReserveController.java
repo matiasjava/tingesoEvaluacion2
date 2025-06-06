@@ -9,6 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/reservas")
 @CrossOrigin("*")
@@ -39,5 +44,29 @@ public class ReserveController {
         }
     }
 
+    @GetMapping("/")
+    public List<Map<String, Object>> getAllReserves() {
+        return reserveService.getAllReserves().stream().map(reserve -> {
+            Map<String, Object> formattedReserve = new HashMap<>();
+            formattedReserve.put("fecha_reserva", reserve.getFechaUso().toString());
+            formattedReserve.put("hora_inicio", reserve.getHoraInicio());
+            formattedReserve.put("hora_fin", reserve.getHoraFin());
+            formattedReserve.put("codigo_reserva", reserve.getCodigoReserva());
+            formattedReserve.put("monto_final", String.valueOf(reserve.getMontoFinal()));
+            formattedReserve.put("vueltas_o_tiempo", String.valueOf(reserve.getVueltasOTiempo()));
 
-}
+            List<Map<String, Object>> detallesList = reserve.getDetalles().stream().map(detalle -> {
+                Map<String, Object> detalleMap = new HashMap<>();
+                detalleMap.put("monto_final", detalle.getMontoFinal());
+                return detalleMap;
+            }).collect(Collectors.toList());
+
+            formattedReserve.put("detalles", detallesList);
+
+            return formattedReserve;
+        }).collect(Collectors.toList());
+    }
+
+
+
+} //formattedReserve.put("cantidadpersonas", String.valueOf(reserve.getCantidadPersonas()));
