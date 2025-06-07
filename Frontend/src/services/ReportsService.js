@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/api/reserves/`;
+const API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/api/reportes/`;
 
 export const fetchReporteIngresos = async (fechaInicio, fechaFin) => {
     try {
