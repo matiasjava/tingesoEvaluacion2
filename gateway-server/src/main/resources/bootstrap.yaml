@@ -1,10 +1,16 @@
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-
 spring:
   application:
     name: gateway-server
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    preferIpAddress: false
+    hostname: gateway-server
