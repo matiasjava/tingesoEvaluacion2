@@ -10,7 +10,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/rack")
-@CrossOrigin(origins = "*")
 public class RackController {
 
     private final RackService rackService;

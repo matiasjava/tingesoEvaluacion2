@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/fecha-descuento")
-@CrossOrigin(origins = "*")
 public class SpecialTariffController {
 
     @Autowired
