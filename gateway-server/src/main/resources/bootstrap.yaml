@@ -14,3 +14,8 @@ eureka:
   instance:
     preferIpAddress: false
     hostname: gateway-server
+
+logging:
+  level:
+    com.netflix.discovery: DEBUG
+    org.springframework.cloud.netflix.eureka: DEBUG
