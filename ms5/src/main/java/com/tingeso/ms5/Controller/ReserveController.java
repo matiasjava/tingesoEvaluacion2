@@ -44,7 +44,7 @@ public class ReserveController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Map<String, Object>> getAllReserves() {
         return reserveService.getAllReserves().stream().map(reserve -> {
             Map<String, Object> formattedReserve = new HashMap<>();

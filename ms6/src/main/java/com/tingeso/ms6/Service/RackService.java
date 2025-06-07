@@ -19,7 +19,7 @@ public class RackService {
     }
 
     public List<Map<String, String>> getAllReservesFromMs5() {
-        String url = "http://ms5/api/reservas/"; // Cambia si tu endpoint real es otro
+        String url = "http://ms5/api/reservas";
 
         ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
                 url,
