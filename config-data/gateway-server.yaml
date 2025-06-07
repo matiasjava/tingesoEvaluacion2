@@ -47,6 +47,8 @@ spring:
         - id: ms5
           uri: lb://ms5
           predicates:
+            - Path=/api/reservas
+            - Path=/api/reservas/
             - Path=/api/reservas/**
             - Path=/api/users/**
         - id: ms6
