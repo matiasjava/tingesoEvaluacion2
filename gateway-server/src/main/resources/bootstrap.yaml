@@ -1,3 +1,5 @@
+server:
+  max-http-header-size: 16384
 spring:
   application:
     name: gateway-server
