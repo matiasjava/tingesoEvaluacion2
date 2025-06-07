@@ -1,31 +1,59 @@
 server:
   port: 8080
+
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8080/eureka/
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
 spring:
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
-        default-filters:
-          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:
-        cors-configurations:
+        corsConfigurations:
           '[/**]':
-            allowedOrigins: '*'
-            allowedMethods: "*"
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
             allowedHeaders: "*"
+            allowCredentials: true
       routes:
         - id: ms1
           uri: lb://ms1
           predicates:
-            - Path=/m1/**
+            - Path=/api/tarifas/**
         - id: ms2
           uri: lb://ms2
           predicates:
-            - Path=/ms2/**
+            - Path=/api/descuentoscantidad/**
+        - id: ms3
+          uri: lb://ms3
+          predicates:
+            - Path=/api/frecuencia/**
+        - id: ms4
+          uri: lb://ms4
+          predicates:
+            - Path=/api/fecha-descuento/**
+        - id: ms5
+          uri: lb://ms5
+          predicates:
+            - Path=/api/reservas/**
+            - Path=/api/users/**
+        - id: ms6
+          uri: lb://ms6
+          predicates:
+            - Path=/api/rack/**
+        - id: ms7
+          uri: lb://ms7
+          predicates:
+            - Path=/api/reportes/**
