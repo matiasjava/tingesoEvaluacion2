@@ -37,6 +37,9 @@ spring:
               - DELETE
             allowedHeaders: "*"
             allowCredentials: true
+      httpclient:
+        connect-timeout: 5000
+        response-timeout: 10s    
       routes:
         - id: ms1
           uri: lb://ms1
@@ -61,6 +64,8 @@ spring:
             - Path=/api/reservas/
             - Path=/api/reservas/**
             - Path=/api/users/**
+          filters:
+            - StripPrefix=1
         - id: ms6
           uri: lb://ms6
           predicates:
