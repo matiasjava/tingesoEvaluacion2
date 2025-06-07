@@ -29,14 +29,14 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-              allowedOrigins: "*"
+              allowedOrigins: "http://localhost:5173"
               allowedMethods:
                 - GET
                 - POST
                 - PUT
                 - DELETE
               allowedHeaders: "*"
-              allowCredentials: false
+              allowCredentials: true
       httpclient:
         connect-timeout: 5000
         response-timeout: 10s    
