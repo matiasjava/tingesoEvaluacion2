@@ -4,4 +4,58 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8081
+      uri: http://config-server:8081
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: ms1
+          uri: lb://ms1
+          predicates:
+            - Path=/api/tariffs/**
+        - id: ms2
+          uri: lb://ms2
+          predicates:
+            - Path=/api/groups/**
+        - id: ms3
+          uri: lb://ms3
+          predicates:
+            - Path=/api/frequents/**
+        - id: ms4
+          uri: lb://ms4
+          predicates:
+            - Path=/api/special/**
+        - id: ms5
+          uri: lb://ms5
+          predicates:
+            - Path=/api/reservations/**
+        - id: ms6
+          uri: lb://ms6
+          predicates:
+            - Path=/api/racks/**
+        - id: ms7
+          uri: lb://ms7
+          predicates:
+            - Path=/api/reports/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    preferIpAddress: false
+    hostname: gateway-server
