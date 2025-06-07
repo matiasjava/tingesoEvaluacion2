@@ -1,26 +1,32 @@
+server:
+  port: 8005
+
 spring:
   application:
     name: ms5
+
   cloud:
     config:
-      enabled: true
-      uri: http://localhost:8081
+      import-check:
+        enabled: false
+
   datasource:
     url: jdbc:postgresql://localhost:5432/ms5
     username: postgres
     password: 123456
+
   jpa:
     hibernate:
       ddl-auto: update
 
-mail:
-  host: smtp.gmail.com
-  port: 587
-  username: kartingrm24@gmail.com
-  password: tzby cfgw ywfb suqb
-  properties:
-    mail:
-      smtp:
-        auth: true
-        starttls:
-          enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kartingrm24@gmail.com
+    password: tzby cfgw ywfb suqb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
