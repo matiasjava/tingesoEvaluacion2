@@ -60,12 +60,7 @@ spring:
         - id: ms5
           uri: lb://ms5
           predicates:
-            - Path=/api/reservas
-            - Path=/api/reservas/
             - Path=/api/reservas/**
-            - Path=/api/users/**
-          filters:
-            - StripPrefix=1
         - id: ms6
           uri: lb://ms6
           predicates:
