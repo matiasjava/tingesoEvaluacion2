@@ -1,10 +1,18 @@
 server:
   port: 8080
+  max-http-header-size: 16384
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    preferIpAddress: true
+    hostname: ${spring.application.name}
 
 spring:
-  application:
-    name: gateway-server
-
   cloud:
     gateway:
       discovery:
@@ -51,12 +59,3 @@ spring:
           uri: lb://ms7
           predicates:
             - Path=/api/reportes/**
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
