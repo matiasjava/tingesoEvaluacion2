@@ -1,24 +1,17 @@
-server:
-  port: 8005
-
 spring:
   application:
     name: ms5
-
   cloud:
     config:
-      import-check:
-        enabled: false
-
+      enabled: true
+      uri: http://localhost:8081
   datasource:
     url: jdbc:postgresql://localhost:5432/ms5
     username: postgres
     password: 123456
-
   jpa:
     hibernate:
       ddl-auto: update
-
   mail:
     host: smtp.gmail.com
     port: 587
