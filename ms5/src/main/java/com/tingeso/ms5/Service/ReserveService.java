@@ -262,7 +262,7 @@ public class ReserveService {
     }
 
     public int obtenerTarifa(int duracionMinutos) {
-        String url = "http://localhost:8001/api/tarifas/duracion/" + duracionMinutos;
+        String url = "http://ms1/api/tarifas/duracion/" + duracionMinutos;
         TariffDTO tarifa = restTemplate.getForObject(url, TariffDTO.class);
         if (tarifa == null) {
             throw new RuntimeException("No se encontró una tarifa para la duración: " + duracionMinutos);
@@ -271,7 +271,7 @@ public class ReserveService {
     }
 
     public double obtenerDescuentoPorCantidad(int cantidadPersonas) {
-        String url = "http://localhost:8002/api/descuentoscantidad/" + cantidadPersonas;
+        String url = "http://ms2/api/descuentoscantidad/" + cantidadPersonas;
         DescuentoCantidadResponse response = restTemplate.getForObject(url, DescuentoCantidadResponse.class);
         Double descuento = response.getDescuento();
 
@@ -283,7 +283,7 @@ public class ReserveService {
     public double obtenerDescuentoPorCategoria(String rut) {
         System.out.println(rut);
         int visitas = userService.getUserByRut(rut).getNumberVisits();
-        String url = "http://localhost:8003/api/frecuencia/" + visitas;
+        String url = "http://ms3/api/frecuencia/" + visitas;
         DiscountFrecuenciaEntity response = restTemplate.getForObject(url, DiscountFrecuenciaEntity.class);
 
         if (response == null || response.getDescuento() == null) {

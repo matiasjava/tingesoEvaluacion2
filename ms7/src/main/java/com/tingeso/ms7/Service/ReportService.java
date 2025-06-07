@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ReportService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String reservasUrl = "http://localhost:8005/api/reservas/";
+    private final String reservasUrl = "http://ms5/api/reservas/";
 
     public Map<String, Map<String, Double>> getReporteIngresosPorVueltasOTiempo(LocalDate fechaInicio, LocalDate fechaFin) {
         ResponseEntity<ReserveDTO[]> response = restTemplate.getForEntity(reservasUrl, ReserveDTO[].class);
