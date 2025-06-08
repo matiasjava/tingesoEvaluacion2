@@ -5,10 +5,3 @@ spring:
     config:
       enabled: true
       uri: http://config-server:8081
-  datasource:
-    url: jdbc:postgresql://postgres:5432/ms4
-    username: postgres
-    password: 123456
-  jpa:
-    hibernate:
-      ddl-auto: update
