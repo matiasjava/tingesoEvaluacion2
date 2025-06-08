@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
-  CREATE DATABASE ms1;
-  CREATE DATABASE ms2;
-  CREATE DATABASE ms3;
-  CREATE DATABASE ms4;
-  CREATE DATABASE ms5;
-  CREATE DATABASE ms6;
-  CREATE DATABASE ms7;
+echo "Creando múltiples bases de datos: $POSTGRES_MULTIPLE_DATABASES"
+
+for db in $(echo $POSTGRES_MULTIPLE_DATABASES | tr ',' ' '); do
+  echo "Creando base de datos: $db"
+  psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<EOSQL
+    CREATE DATABASE "$db";
+    GRANT ALL PRIVILEGES ON DATABASE "$db" TO "$POSTGRES_USER";
 EOSQL
+done
