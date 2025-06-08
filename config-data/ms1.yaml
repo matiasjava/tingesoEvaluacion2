@@ -8,3 +8,11 @@ eureka:
     fetch-registry: true
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/ms1
+    username: postgres
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
