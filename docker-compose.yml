@@ -1,0 +1,211 @@
+version: '3.8'
+
+services:
+  # Config Server (debe iniciarse primero)
+  config-server:
+    build: ./tingesoEvaluacion2/config-server
+    container_name: config-server
+    ports:
+      - "8081:8081"
+    networks:
+      - tingeso-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # Eureka Server
+  eureka-server:
+    build: ./tingesoEvaluacion2/eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8761/eureka/apps || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # Gateway
+  gateway-server:
+    build: ./tingesoEvaluacion2/gateway-server
+    container_name: gateway-server
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # Microservicios (ms1 a ms7)
+  ms1:
+    build: ./tingesoEvaluacion2/ms1
+    container_name: ms1
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  ms2:
+    build: ./tingesoEvaluacion2/ms2
+    container_name: ms2
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  ms3:
+    build: ./tingesoEvaluacion2/ms3
+    container_name: ms3
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  ms4:
+    build: ./tingesoEvaluacion2/ms4
+    container_name: ms4
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  ms5:
+    build: ./tingesoEvaluacion2/ms5
+    container_name: ms5
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  ms6:
+    build: ./tingesoEvaluacion2/ms6
+    container_name: ms6
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  ms7:
+    build: ./tingesoEvaluacion2/ms7
+    container_name: ms7
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8081
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - tingeso-net
+
+  # Frontend (React)
+  frontend:
+    build: ./Frontend
+    container_name: frontend
+    ports:
+      - "5173:80"
+    networks:
+      - tingeso-net
+
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_MULTIPLE_DATABASES: ms1,ms2,ms3,ms4,ms5,ms6,ms7
+    volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - tingeso-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  tingeso-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
