@@ -62,7 +62,7 @@ export const createReserve = async (reserve) => {
 
 export const confirmReserve = async (reserve) => {
   try {
-    const response = await axios.post(`${API_URL}confirmar`, reserve, {
+    const response = await axios.post(`${API_URL}/confirmar`, reserve, {
       headers: { 'Content-Type': 'application/json' },
     });
     return response.data;

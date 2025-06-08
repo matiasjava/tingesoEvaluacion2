@@ -19,10 +19,10 @@ const Home = () => {
   const handleContinue = () => {
     const tipoDuracion =
       selectedDuration === "30"
-        ? "10 vueltas"
+        ? 30
         : selectedDuration === "35"
-        ? "15 vueltas"
-        : "20 vueltas";
+        ? 35
+        : 40;
 
     navigate('/formulario', {
       state: {

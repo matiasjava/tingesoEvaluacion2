@@ -40,19 +40,19 @@ const Formulario = () => {
       const participantesConUsuarios = await processParticipants(personas);
 
       const reserva = {
-        fecha_uso: dia,
-        hora_inicio: horaInicio,
-        hora_fin: horaTermino,
-        vueltas_o_tiempo: tipoDuracion,
-        cliente: { id: participantesConUsuarios[0].userId }, 
-        cantidad_personas: cantidadPersonas,
-        detalles: participantesConUsuarios.map((participante) => ({
-          memberName: participante.nombre,
-          rut: participante.rut,
-          dateBirthday: participante.fechaCumpleanos,
-          userId: participante.userId,
-        })),
-      };
+        fechaUso: dia,
+        horaInicio: horaInicio,
+        horaFin: horaTermino,
+        vueltasOTiempo: tipoDuracion,
+        clienteId: participantesConUsuarios[0].userId, 
+        cantidadPersonas: cantidadPersonas,
+        miembros: participantesConUsuarios.map((participante) => ({
+        nombre: participante.nombre,
+        rut: participante.rut,
+        fechaNacimiento: participante.fechaCumpleanos,
+        userId: participante.userId,
+      })),
+    };
   
       const response = await confirmReserve(reserva);
       alert('Reserva confirmada exitosamente');
