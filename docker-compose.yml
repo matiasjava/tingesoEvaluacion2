@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Config Server (debe iniciarse primero)
   config-server:
-    build: ./tingesoEvaluacion2/config-server
+    build: ./config-server
     container_name: config-server
     ports:
       - "8081:8081"
@@ -18,7 +18,7 @@ services:
 
   # Eureka Server
   eureka-server:
-    build: ./tingesoEvaluacion2/eureka-server
+    build: ./eureka-server
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -39,7 +39,7 @@ services:
 
   # Gateway
   gateway-server:
-    build: ./tingesoEvaluacion2/gateway-server
+    build: ./gateway-server
     container_name: gateway-server
     ports:
       - "8080:8080"
@@ -62,7 +62,7 @@ services:
 
   # Microservicios (ms1 a ms7)
   ms1:
-    build: ./tingesoEvaluacion2/ms1
+    build: ./ms1
     container_name: ms1
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
@@ -78,7 +78,7 @@ services:
       - tingeso-net
 
   ms2:
-    build: ./tingesoEvaluacion2/ms2
+    build: ./ms2
     container_name: ms2
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
@@ -94,7 +94,7 @@ services:
       - tingeso-net
 
   ms3:
-    build: ./tingesoEvaluacion2/ms3
+    build: ./ms3
     container_name: ms3
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
@@ -110,7 +110,7 @@ services:
       - tingeso-net
 
   ms4:
-    build: ./tingesoEvaluacion2/ms4
+    build: ./ms4
     container_name: ms4
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
@@ -126,7 +126,7 @@ services:
       - tingeso-net
 
   ms5:
-    build: ./tingesoEvaluacion2/ms5
+    build: ./ms5
     container_name: ms5
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
@@ -142,7 +142,7 @@ services:
       - tingeso-net
 
   ms6:
-    build: ./tingesoEvaluacion2/ms6
+    build: ./ms6
     container_name: ms6
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
@@ -158,7 +158,7 @@ services:
       - tingeso-net
 
   ms7:
-    build: ./tingesoEvaluacion2/ms7
+    build: ./ms7
     container_name: ms7
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
