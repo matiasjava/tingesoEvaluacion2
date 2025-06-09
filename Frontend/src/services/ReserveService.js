@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/api/reservas`;
-const USER_API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/api/users/`;
+const API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/reservas`;
+const USER_API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/users/`;
 
 export const processParticipants = async (personas) => {
   try {

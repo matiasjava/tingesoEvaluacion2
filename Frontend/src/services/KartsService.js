@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/api/karts/`;
+const API_URL = `${import.meta.env.VITE_PAYROLL_BACKEND_SERVER}/karts/`;
 
 export const getKarts = async () => {
   try {
