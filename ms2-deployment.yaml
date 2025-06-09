@@ -15,15 +15,15 @@ spec:
         io.kompose.service: ms2
     spec:
       containers:
-        - name: ms2
-          image: matiasvejar/ms2:latest
-          env:
-            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
-              value: http://eureka-server:8761/eureka
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-server:8081
-            - name: POD_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
+      - name: ms2
+        image: matiasvejar/ms2:latest
+        env:
+          - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            value: http://eureka-server:8761/eureka/
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: http://config-server:8081
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
       restartPolicy: Always
