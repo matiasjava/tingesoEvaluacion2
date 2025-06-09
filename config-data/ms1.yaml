@@ -10,7 +10,7 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     prefer-ip-address: true
-    ip-address: ${POD_IP:}
+    ip-address: ${POD_IP:172.21.194.184}
 
 spring:
   datasource:
