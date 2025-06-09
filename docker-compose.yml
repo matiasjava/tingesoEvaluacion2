@@ -64,7 +64,10 @@ services:
   ms1:
     build: ./ms1
     container_name: ms1
+    ports:
+      - "8001:8001"
     environment:
+      PORT: 8001
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -80,7 +83,10 @@ services:
   ms2:
     build: ./ms2
     container_name: ms2
+    ports:
+      - "8002:8002"
     environment:
+      PORT: 8002
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -96,7 +102,10 @@ services:
   ms3:
     build: ./ms3
     container_name: ms3
+    ports:
+      - "8003:8003"
     environment:
+      PORT: 8003
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -112,7 +121,10 @@ services:
   ms4:
     build: ./ms4
     container_name: ms4
+    ports:
+      - "8004:8004"
     environment:
+      PORT: 8004
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -128,7 +140,10 @@ services:
   ms5:
     build: ./ms5
     container_name: ms5
+    ports:
+      - "8005:8005"
     environment:
+      PORT: 8005
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -144,7 +159,10 @@ services:
   ms6:
     build: ./ms6
     container_name: ms6
+    ports:
+      - "8006:8006"
     environment:
+      PORT: 8006
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -160,7 +178,10 @@ services:
   ms7:
     build: ./ms7
     container_name: ms7
+    ports:
+      - "8007:8007"
     environment:
+      PORT: 8007
       SPRING_CLOUD_CONFIG_URI: http://config-server:8081
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
