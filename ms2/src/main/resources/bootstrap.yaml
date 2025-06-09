@@ -5,13 +5,3 @@ spring:
     config:
       enabled: true
       uri: http://config-server:8081
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-    ip-address: ${POD_IP:}
