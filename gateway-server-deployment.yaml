@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: C:\Program Files\Kompose\kompose.exe convert
+    kompose.cmd: kompose convert
     kompose.version: 1.36.0 (ae2a39403)
   labels:
     io.kompose.service: gateway-server
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: C:\Program Files\Kompose\kompose.exe convert
+        kompose.cmd: kompose convert
         kompose.version: 1.36.0 (ae2a39403)
       labels:
         io.kompose.service: gateway-server

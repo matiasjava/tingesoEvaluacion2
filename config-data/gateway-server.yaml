@@ -2,6 +2,12 @@ server:
   port: 8080
   max-http-header-size: 16384
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
 eureka:
   client:
     fetch-registry: true
@@ -9,16 +15,8 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:8761/eureka/
   instance:
-    preferIpAddress: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
+    preferIpAddress: true    # Change to true
+    hostname: ${spring.application.name}
 
 spring:
   cloud:
@@ -29,17 +27,14 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-              allowedOrigins: "http://localhost:5173"
-              allowedMethods:
-                - GET
-                - POST
-                - PUT
-                - DELETE
-              allowedHeaders: "*"
-              allowCredentials: true
-      httpclient:
-        connect-timeout: 5000
-        response-timeout: 10s    
+            allowedOrigins: ["*"]
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+            allowCredentials: false
       routes:
         - id: ms1
           uri: lb://ms1
