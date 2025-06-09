@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: C:\Program Files\Kompose\kompose.exe convert
+    kompose.cmd: kompose convert
     kompose.version: 1.36.0 (ae2a39403)
   labels:
     io.kompose.service: eureka-server
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: C:\Program Files\Kompose\kompose.exe convert
+        kompose.cmd: kompose convert
         kompose.version: 1.36.0 (ae2a39403)
       labels:
         io.kompose.service: eureka-server
@@ -30,12 +30,12 @@ spec:
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
-              path: /
+              path: /actuator/health
               port: 8761
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 5
+            failureThreshold: 10
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
           name: eureka-server
           ports:
             - containerPort: 8761
