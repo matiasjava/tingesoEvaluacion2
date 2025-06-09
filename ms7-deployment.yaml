@@ -28,6 +28,10 @@ spec:
               value: "8007"
             - name: SPRING_CLOUD_CONFIG_URI
               value: http://config-server:8081
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           image: matiasvejar/ms7:latest
           name: ms7
           ports:
