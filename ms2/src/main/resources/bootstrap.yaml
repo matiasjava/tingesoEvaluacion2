@@ -8,9 +8,11 @@ spring:
 
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: true
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
   instance:
     prefer-ip-address: true
+    ip-address: ${POD_IP:}
+    hostname: ${POD_IP}
