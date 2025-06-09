@@ -15,4 +15,3 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: ${POD_IP:}
-    hostname: ${POD_IP}
