@@ -1,12 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: C:\Program Files\Kompose\kompose.exe convert
-    kompose.version: 1.36.0 (ae2a39403)
+  name: ms6
   labels:
     io.kompose.service: ms6
-  name: ms6
 spec:
   replicas: 1
   selector:
@@ -14,27 +11,21 @@ spec:
       io.kompose.service: ms6
   template:
     metadata:
-      annotations:
-        kompose.cmd: C:\Program Files\Kompose\kompose.exe convert
-        kompose.version: 1.36.0 (ae2a39403)
       labels:
         io.kompose.service: ms6
     spec:
       containers:
-        - env:
+        - name: ms6
+          image: matiasvejar/ms6:latest
+          env:
             - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
               value: http://eureka-server:8761/eureka
             - name: PORT
-              value: "8006"
+              value: "0"
             - name: SPRING_CLOUD_CONFIG_URI
               value: http://config-server:8081
             - name: POD_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-          image: matiasvejar/ms6:latest
-          name: ms6
-          ports:
-            - containerPort: 8006
-              protocol: TCP
       restartPolicy: Always
